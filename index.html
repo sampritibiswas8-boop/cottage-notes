@@ -102,12 +102,17 @@ function addNote() {
     const file = document.getElementById("imageInput").files[0];
 
     if(file){
+        if(file.size > 2 * 1024 * 1024){
+            alert("Image too large! Please upload under 2MB.");
+            return;
+        }
+
         const reader = new FileReader();
         reader.onload = function(e){
             notes.push({text: text, img: e.target.result});
             saveNotes();
             renderNotes();
-        }
+        };
         reader.readAsDataURL(file);
     } else {
         notes.push({text: text});
@@ -116,8 +121,8 @@ function addNote() {
     }
 
     document.getElementById("noteInput").value = "";
+    document.getElementById("imageInput").value = "";
 }
-
 renderNotes();
 </script>
 
